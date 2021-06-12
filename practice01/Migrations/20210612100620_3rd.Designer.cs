@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using practice01.Models;
 
 namespace practice01.Migrations
 {
     [DbContext(typeof(MyPracticeDbContext))]
-    partial class MyPracticeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210612100620_3rd")]
+    partial class _3rd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,13 +78,7 @@ namespace practice01.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProfileId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ProfileId")
-                        .IsUnique();
 
                     b.ToTable("Student");
                 });
@@ -93,22 +89,6 @@ namespace practice01.Migrations
                         .WithMany("Addresses")
                         .HasForeignKey("StudentId");
 
-                    b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("practice01.Models.Student", b =>
-                {
-                    b.HasOne("practice01.Models.Profile", "Profile")
-                        .WithOne("Student")
-                        .HasForeignKey("practice01.Models.Student", "ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Profile");
-                });
-
-            modelBuilder.Entity("practice01.Models.Profile", b =>
-                {
                     b.Navigation("Student");
                 });
 

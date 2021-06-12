@@ -10,8 +10,8 @@ using practice01.Models;
 namespace practice01.Migrations
 {
     [DbContext(typeof(MyPracticeDbContext))]
-    [Migration("20210611160549_one to many")]
-    partial class onetomany
+    [Migration("20210612100716_4th")]
+    partial class _4th
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,6 +47,24 @@ namespace practice01.Migrations
                     b.ToTable("Address");
                 });
 
+            modelBuilder.Entity("practice01.Models.Profile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Profile");
+                });
+
             modelBuilder.Entity("practice01.Models.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -60,7 +78,13 @@ namespace practice01.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ProfileId")
+                        .IsUnique();
 
                     b.ToTable("Student");
                 });
@@ -71,6 +95,22 @@ namespace practice01.Migrations
                         .WithMany("Addresses")
                         .HasForeignKey("StudentId");
 
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("practice01.Models.Student", b =>
+                {
+                    b.HasOne("practice01.Models.Profile", "Profile")
+                        .WithOne("Student")
+                        .HasForeignKey("practice01.Models.Student", "ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("practice01.Models.Profile", b =>
+                {
                     b.Navigation("Student");
                 });
 

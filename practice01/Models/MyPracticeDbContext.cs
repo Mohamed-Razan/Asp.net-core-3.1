@@ -14,5 +14,6 @@ namespace practice01.Models
         }
         public DbSet<Student> Student { get; set; }
         public DbSet<Address> Address { get; set; }
+        public DbSet<Profile> Profile { get; set; }
     }
 }

@@ -10,8 +10,8 @@ using practice01.Models;
 namespace practice01.Migrations
 {
     [DbContext(typeof(MyPracticeDbContext))]
-    [Migration("20210611162309_test")]
-    partial class test
+    [Migration("20210612095822_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,6 +45,24 @@ namespace practice01.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("Address");
+                });
+
+            modelBuilder.Entity("practice01.Models.Profile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Profile");
                 });
 
             modelBuilder.Entity("practice01.Models.Student", b =>
